@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Somatic Release Card Deck</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Georgia',serif;background:#faf8f4;color:#3d3530;min-height:100vh}
+  header{text-align:center;padding:44px 24px 20px;border-bottom:1px solid #e8e0d4}
+  .logo{font-size:10px;letter-spacing:4px;color:#9e8e7e;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:26px;font-weight:normal;margin-bottom:6px}
+  .tagline{font-size:13px;color:#9e8e7e;margin-bottom:18px}
+  .print-btn{background:none;border:1px solid #c8b8a8;padding:8px 20px;border-radius:20px;cursor:pointer;font-size:12px;color:#7e6e5e;letter-spacing:1px;font-family:Georgia,serif}
+  .print-btn:hover{background:#f0ebe4}
+
+  /* filters */
+  .filters{display:flex;gap:8px;padding:20px 24px;flex-wrap:wrap;justify-content:center}
+  .filter-btn{background:white;color:#6e5e4e;border:1px solid #e0d0c0;border-radius:20px;padding:6px 14px;font-size:11px;letter-spacing:1px;cursor:pointer;font-family:Georgia,serif;transition:.15s}
+  .filter-btn.active{background:#8a9e7a;color:white;border-color:#8a9e7a}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;padding:8px 24px 48px;max-width:900px;margin:0 auto}
+
+  /* flip card */
+  .card-wrap{height:240px;perspective:1000px;cursor:pointer}
+  .card-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .card-wrap.flipped .card-inner{transform:rotateY(180deg)}
+  .card-front,.card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+  .card-back{transform:rotateY(180deg);background:white}
+  .cat-label{font-size:9px;letter-spacing:2px;color:#9e8e7e;margin-bottom:10px}
+  .card-icon{font-size:28px;margin-bottom:10px}
+  .card-title{font-size:17px;color:#3d3530;margin-bottom:8px}
+  .card-instruction{font-size:12px;color:#6e5e4e;font-style:italic;line-height:1.5}
+  .card-bottom{display:flex;justify-content:space-between;align-items:center}
+  .dur-badge{font-size:10px;background:white;padding:3px 10px;border-radius:20px;color:#9e8e7e}
+  .flip-hint{font-size:10px;color:#c8b8a8}
+  .back-cat{font-size:9px;letter-spacing:2px;color:#9e8e7e;margin-bottom:10px}
+  .back-detail{font-size:12px;color:#4e3e2e;line-height:1.6;margin-bottom:12px;flex:1}
+  .back-tip{background:#f8f5f0;border-radius:8px;padding:10px;font-size:11px;color:#7e9e6e;line-height:1.5}
+
+  footer{text-align:center;padding:16px 24px 40px;font-size:11px;color:#c8b8a8;letter-spacing:1px}
+
+  /* print */
+  @media print{
+    .filters,.print-btn,header .print-btn{display:none}
+    .grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:0}
+    .card-wrap{height:auto;perspective:none}
+    .card-inner{transform:none!important;position:static;height:auto}
+    .card-front{display:none}
+    .card-back{position:static;transform:none;backface-visibility:visible;border:1px solid #e0d0c0;height:auto;min-height:180px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Somatic Release Guide</div>
+  <h1>Practice Card Deck</h1>
+  <p class="tagline">12 somatic exercises · Tap a card to flip it</p>
+  <button class="print-btn" onclick="window.print()">📄 Print all cards</button>
+</header>
+
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+
+<footer>© Somatic Release Guide · All rights reserved · For personal use only</footer>
+
+<script>
+const cards = [
+  {id:1,cat:"BREATH",title:"Extended Exhale",dur:"3 min",color:"#a5b8d4",icon:"🫁",instruction:"Inhale 4 · Hold 6 · Exhale 8",detail:"Place one hand on your belly. Inhale for 4 counts, hold for 6, exhale slowly for 8. Let the exhale be a sigh of relief. Repeat 6 times.",tip:"A longer exhale activates your parasympathetic nervous system — your calm mode."},
+  {id:2,cat:"BREATH",title:"Belly Breathing",dur:"2 min",color:"#a5b8d4",icon:"🫁",instruction:"Breathe belly-first, not chest-first",detail:"Place both hands on your lower belly. Breathe so your belly rises first. Practice 10 slow breaths and notice the difference.",tip:"Most of us breathe backwards when stressed. This resets the pattern."},
+  {id:3,cat:"JAW & FACE",title:"Jaw Release",dur:"2 min",color:"#d4a5a5",icon:"😮",instruction:"Open wide · Let go · Move side to side",detail:"Open mouth wide, hold 5 sec. Let it hang loosely. Move jaw gently side to side. Massage jaw muscles in circles with fingertips.",tip:"The jaw holds enormous tension — especially if you clench at night."},
+  {id:4,cat:"JAW & FACE",title:"Face Melt",dur:"2 min",color:"#d4a5a5",icon:"🧖‍♀️",instruction:"Scrunch · Release · Soften",detail:"Scrunch your entire face tightly for 5 seconds. Completely let go. Raise eyebrows high, then drop. Massage temples in slow circles.",tip:"Releasing facial tension signals safety to your whole nervous system."},
+  {id:5,cat:"NECK & SHOULDERS",title:"Slow Neck Release",dur:"3 min",color:"#d4c4a5",icon:"🦢",instruction:"Right · Center · Left · Repeat",detail:"Drop right ear to right shoulder. Hold 30 sec, breathe into the stretch. Roll through center to left. Hold 30 sec. Repeat twice.",tip:"Never force or rush neck stretches. Slow is always safe."},
+  {id:6,cat:"NECK & SHOULDERS",title:"Shoulder Shrug & Drop",dur:"2 min",color:"#d4c4a5",icon:"🏔️",instruction:"Lift to ears · Hold · Drop completely",detail:"Inhale and shrug shoulders to ears. Hold 5 sec. Exhale and drop completely. Repeat 5x. Finish with slow shoulder circles.",tip:"That moment of release after holding is pure nervous system relief."},
+  {id:7,cat:"CHEST & HEART",title:"Self-Hug Pressure",dur:"2 min",color:"#d4a5c4",icon:"🤗",instruction:"Hug firmly · Breathe · Open wide",detail:"Wrap arms around yourself and hold firmly. Take 3 deep breaths. Slowly open arms wide, palms facing up. Repeat 3 times.",tip:"Firm pressure activates the vagus nerve and signals safety to the body."},
+  {id:8,cat:"CHEST & HEART",title:"Chest Opener",dur:"3 min",color:"#d4a5c4",icon:"🌸",instruction:"Clasp hands behind · Lift chest · Breathe in",detail:"Sit on chair edge. Interlace fingers behind back. Squeeze shoulder blades, lift chest. Hold 30 sec. Release and repeat 3x.",tip:"Opening the chest sends an immediate message of safety to the nervous system."},
+  {id:9,cat:"SHAKE & GROUND",title:"Micro Shaking",dur:"3 min",color:"#a5d4c4",icon:"✨",instruction:"Bounce knees · Let it travel up · Release",detail:"Stand, knees slightly bent. Bounce gently. Let shaking travel up through hips, belly, chest, arms. Don't control it — let it be free.",tip:"Animals shake after stress to discharge cortisol. You can too."},
+  {id:10,cat:"SHAKE & GROUND",title:"Grounding — Roots",dur:"2 min",color:"#a5d4c4",icon:"🌿",instruction:"Feet flat · Press down · Feel the earth",detail:"Both feet on floor. Press down firmly. Shift weight heel→toe→edges→center. Take 5 breaths imagining roots growing down from your feet.",tip:"Grounding brings you back into your body and into the present moment."},
+  {id:11,cat:"VAGUS NERVE",title:"Humming Breath",dur:"2 min",color:"#c4d4a5",icon:"🎵",instruction:"Inhale · Hum on exhale · Feel the vibration",detail:"Take a deep breath in. On the exhale, hum with lips closed. Feel vibration in chest and throat. Repeat 8 times.",tip:"Humming directly stimulates the vagus nerve — your body's calm switch."},
+  {id:12,cat:"VAGUS NERVE",title:"Cold Water Reset",dur:"1 min",color:"#c4d4a5",icon:"💧",instruction:"Splash cold water on face · Breathe · Reset",detail:"Splash cold water on your face 3–5 times. Or hold a cold glass against your cheeks. Breathe slowly throughout.",tip:"Cold on the face triggers the dive reflex, instantly slowing the heart rate."}
+];
+
+const cats = ["ALL","BREATH","JAW & FACE","NECK & SHOULDERS","CHEST & HEART","SHAKE & GROUND","VAGUS NERVE"];
+let active = "ALL";
+
+function render(){
+  const filtered = active==="ALL" ? cards : cards.filter(c=>c.cat===active);
+  document.getElementById("grid").innerHTML = filtered.map(c=>`
+    <div class="card-wrap" id="cw${c.id}" onclick="flip(${c.id})">
+      <div class="card-inner">
+        <div class="card-front" style="background:${c.color}25;border:1.5px solid ${c.color}88">
+          <div>
+            <div class="cat-label">${c.cat}</div>
+            <div class="card-icon">${c.icon}</div>
+            <div class="card-title">${c.title}</div>
+            <div class="card-instruction">"${c.instruction}"</div>
+          </div>
+          <div class="card-bottom">
+            <span class="dur-badge">${c.dur}</span>
+            <span class="flip-hint">tap to flip →</span>
+          </div>
+        </div>
+        <div class="card-back" style="border:1.5px solid ${c.color}88">
+          <div class="back-cat">${c.title.toUpperCase()}</div>
+          <div class="back-detail">${c.detail}</div>
+          <div class="back-tip">💡 ${c.tip}</div>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function flip(id){
+  document.getElementById("cw"+id).classList.toggle("flipped");
+}
+
+// filters
+document.getElementById("filters").innerHTML = cats.map(c=>`
+  <button class="filter-btn${c===active?' active':''}" onclick="setFilter('${c}')">${c}</button>`).join("");
+
+function setFilter(cat){
+  active=cat;
+  document.querySelectorAll(".filter-btn").forEach(b=>{
+    b.classList.toggle("active", b.textContent===cat);
+  });
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
