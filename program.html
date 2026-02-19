@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>7-Day Nervous System Reset</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Georgia',serif;background:#faf8f4;color:#3d3530;min-height:100vh}
+
+  /* header */
+  header{text-align:center;padding:44px 24px 24px;border-bottom:1px solid #e8e0d4}
+  .logo{font-size:10px;letter-spacing:4px;color:#9e8e7e;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:26px;font-weight:normal;margin-bottom:6px}
+  .tagline{font-size:13px;color:#9e8e7e;margin-bottom:0}
+
+  /* nav */
+  .back-link{display:inline-block;margin:20px 24px 0;font-size:12px;color:#9e8e7e;text-decoration:none;letter-spacing:1px}
+  .back-link:hover{color:#3d3530}
+
+  /* overview grid */
+  #overview{max-width:680px;margin:0 auto;padding:24px}
+  .status-msg{text-align:center;font-size:13px;color:#9e8e7e;margin-bottom:24px;font-style:italic}
+  .days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+  .day-card{background:white;border:1px solid #e8e0d4;border-radius:16px;padding:20px 16px;cursor:pointer;text-align:center;transition:transform .15s,box-shadow .15s;position:relative}
+  .day-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+  .day-card.locked{opacity:.4;cursor:default}
+  .day-card.locked:hover{transform:none;box-shadow:none}
+  .day-card.done{background:#f5f3ef;border-color:#c8c0b4}
+  .day-num{font-size:10px;letter-spacing:2px;color:#9e8e7e;text-transform:uppercase;margin-bottom:8px}
+  .day-theme{font-size:15px;color:#3d3530;margin-bottom:4px}
+  .day-sub{font-size:10px;color:#9e8e7e;margin-bottom:10px}
+  .day-dot{width:8px;height:8px;border-radius:50%;margin:0 auto}
+  .lock-icon{font-size:12px;color:#ccc;margin-top:6px}
+  .done-badge{position:absolute;top:10px;right:10px;font-size:14px}
+
+  /* detail view */
+  #detail{display:none;max-width:640px;margin:0 auto;padding:16px 24px 48px}
+  .back-btn{background:none;border:none;cursor:pointer;color:#9e8e7e;font-size:12px;letter-spacing:1px;font-family:Georgia,serif;padding:0;margin-bottom:20px}
+  .day-header{border-radius:16px;padding:24px;margin-bottom:24px;text-align:center}
+  .dh-num{font-size:10px;letter-spacing:3px;color:#9e8e7e;text-transform:uppercase}
+  .dh-theme{font-size:26px;font-weight:normal;margin:8px 0 4px}
+  .dh-sub{font-size:14px;color:#7e6e5e;font-style:italic}
+  .intro{font-size:15px;line-height:1.75;color:#5e4e3e;margin-bottom:28px}
+  .section-label{font-size:10px;letter-spacing:3px;color:#9e8e7e;text-transform:uppercase;margin-bottom:14px}
+  .ex-block{background:white;border:1px solid #e8e0d4;border-radius:12px;padding:20px;margin-bottom:14px}
+  .ex-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .ex-name{font-size:15px;color:#3d3530}
+  .ex-dur{font-size:10px;letter-spacing:2px;color:#9e8e7e;background:#f0ede8;padding:4px 10px;border-radius:20px}
+  .step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;cursor:pointer}
+  .step-box{width:18px;height:18px;border-radius:50%;border:1.5px solid #c8b8a8;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .step-box.checked{background:#8a9e7a;border-color:#8a9e7a}
+  .step-text{font-size:13px;line-height:1.6;color:#4e3e2e;transition:.15s}
+  .step-text.checked{color:#9e8e7e;text-decoration:line-through}
+  .reflection-section{margin-bottom:24px}
+  .ref-box{background:#faf8f4;border:1px solid #e8e0d4;border-radius:8px;padding:12px 14px;margin-bottom:10px}
+  .ref-q{font-size:13px;color:#6e5e4e;font-style:italic;margin-bottom:6px}
+  .ref-input{width:100%;border:none;background:transparent;font-family:Georgia,serif;font-size:13px;color:#3d3530;resize:none;outline:none;min-height:36px}
+  .affirmation{background:white;border:1px solid #e8e0d4;border-radius:12px;padding:20px;text-align:center;font-size:15px;font-style:italic;color:#7e6e5e;line-height:1.7;margin-bottom:24px}
+  .complete-btn{width:100%;padding:16px;background:#8a9e7a;color:white;border:none;border-radius:12px;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif}
+  .complete-btn:hover{background:#7a8e6a}
+
+  footer{text-align:center;padding:16px 24px 40px;font-size:11px;color:#c8b8a8;letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Somatic Release Guide</div>
+  <h1>7-Day Nervous System Reset</h1>
+  <p class="tagline">For Busy Women · 5–10 min per day</p>
+</header>
+
+<a class="back-link" href="index.html">← Card Deck</a>
+
+<div id="overview">
+  <p class="status-msg" id="status-msg">Begin with Day 1 — each day unlocks after the previous is complete.</p>
+  <div class="days-grid" id="days-grid"></div>
+</div>
+
+<div id="detail">
+  <button class="back-btn" onclick="showOverview()">← Back to overview</button>
+  <div id="detail-content"></div>
+</div>
+
+<footer>© Somatic Release Guide · All rights reserved · For personal use only</footer>
+
+<script>
+const days = [
+  { n:1, theme:"Awareness", sub:"Where does your body hold stress?", color:"#d4a5a5",
+    intro:"Before we can release tension, we need to notice it. Today is about becoming curious about your body — without judgment. There is nothing to fix today. Only to feel.",
+    exercises:[
+      { name:"Body Scan", dur:"3 min", steps:["Sit or lie down comfortably. Close your eyes.","Start at the top of your head. Notice any tightness, heaviness, or tingling.","Slowly move your awareness down: forehead → jaw → neck → shoulders → chest → belly → hips → legs → feet.","Don't try to fix anything. Just notice and breathe."] },
+      { name:"Tension Map", dur:"2 min", steps:["Mentally note where you felt the most tension during the body scan.","Common areas: jaw, neck, chest, belly. All valid. All important.","This is your personal stress map — you'll work with it all week."] }
+    ],
+    reflection:["Where did you feel the most tension today?","Was there any area that surprised you?"],
+    affirmation:"My body is always communicating with me. Today I choose to listen."
+  },
+  { n:2, theme:"Breath", sub:"Your fastest tool for calm", color:"#a5b8d4",
+    intro:"The breath is the only part of your nervous system you can consciously control. A longer exhale activates the parasympathetic system — your 'rest and digest' mode.",
+    exercises:[
+      { name:"Extended Exhale (4-6-8)", dur:"3 min", steps:["Sit upright. Place one hand on your belly.","Inhale through your nose for 4 counts.","Hold gently for 6 counts.","Exhale slowly through your mouth for 8 counts. Let it be a sigh of relief.","Repeat 6 times."] },
+      { name:"Belly Breathing Reset", dur:"2 min", steps:["Place both hands on your lower belly.","Breathe so your belly rises first, then your chest.","Practice 10 slow belly breaths. Feel the difference."] }
+    ],
+    reflection:["Did your body start to soften during the breathing?","What emotions (if any) came up?"],
+    affirmation:"Every exhale is a release. I let go with every breath."
+  },
+  { n:3, theme:"Jaw & Face", sub:"Releasing the silent tension holder", color:"#c4d4a5",
+    intro:"The jaw is one of the most tension-loaded areas in the body. Many of us clench without realizing it — especially at night or during stressful moments.",
+    exercises:[
+      { name:"Jaw Release", dur:"2 min", steps:["Open your mouth as wide as comfortable. Hold for 5 seconds.","Let your mouth hang open loosely — like you're about to yawn.","Move your jaw slowly side to side, very gently.","Place your fingertips on your jaw muscles and apply gentle circular pressure.","End by letting your teeth part slightly, tongue resting on the bottom of your mouth."] },
+      { name:"Face Melt", dur:"2 min", steps:["Scrunch your entire face tightly for 5 seconds.","Then completely release — let everything go soft.","Raise your eyebrows high, then let them drop.","Gently massage your temples in slow circles.","Finish with 3 slow exhales through slightly parted lips."] }
+    ],
+    reflection:["How much tension were you holding in your jaw before this?","How do you feel after releasing it?"],
+    affirmation:"I don't need to hold on so tightly. I allow my face to soften."
+  },
+  { n:4, theme:"Neck & Shoulders", sub:"Putting down the weight you carry", color:"#d4c4a5",
+    intro:"The neck and shoulders carry our burdens — literally. Chronic tension here can cause headaches, poor sleep, and a constant feeling of being 'on guard'.",
+    exercises:[
+      { name:"Slow Neck Release", dur:"3 min", steps:["Sit tall. Drop your right ear toward your right shoulder — gently.","Hold for 30 seconds, breathing into the left side of your neck.","Slowly roll your chin down to your chest. Pause.","Continue to the left side. Hold 30 seconds.","Roll back to center. Repeat the whole sequence twice."] },
+      { name:"Shoulder Shrug & Drop", dur:"2 min", steps:["Inhale and raise both shoulders up to your ears. Hold for 5 seconds.","Exhale and drop them completely. Feel the release.","Repeat 5 times.","Finish with slow shoulder circles — 5 forward, 5 backward."] }
+    ],
+    reflection:["Do you notice yourself tensing your shoulders during the day?","What triggers cause you to 'hold' tension in this area?"],
+    affirmation:"I release what is not mine to carry. My shoulders are free."
+  },
+  { n:5, theme:"Chest & Heart", sub:"Opening what has been closed", color:"#d4a5c4",
+    intro:"When we're stressed or heartbroken, we unconsciously close our chest — hunching forward as a protective posture. Today we gently open back up.",
+    exercises:[
+      { name:"Self-Hug Pressure Release", dur:"2 min", steps:["Wrap your arms around yourself in a hug. Hold firmly.","Take 3 deep breaths, feeling the pressure of your own arms.","Slowly release and open your arms wide — palms facing up.","Notice the contrast between closed and open.","Repeat 3 times."] },
+      { name:"Chest Opener", dur:"3 min", steps:["Sit on the edge of a chair. Interlace your fingers behind your back.","Gently squeeze your shoulder blades together and lift your chest.","Hold for 30 seconds, breathing into your chest.","Release and roll forward slightly.","Repeat 3 times."] }
+    ],
+    reflection:["What emotions live in your chest area?","When did you last feel truly open and expansive in your body?"],
+    affirmation:"I open my heart to ease. I am safe to take up space."
+  },
+  { n:6, theme:"Shake & Ground", sub:"Release like animals do", color:"#a5d4c4",
+    intro:"Animals naturally shake after a stressful event — it's how they discharge stress hormones from the nervous system. We've forgotten how to do this. Today we remember.",
+    exercises:[
+      { name:"Micro Shaking", dur:"3 min", steps:["Stand with feet hip-width apart, knees slightly bent.","Start bouncing gently — just letting your knees bend and release.","Let the shaking travel up: hips → belly → chest → arms.","Don't control it — let it be organic and a little silly.","After 2 minutes, slow down and stand still. Notice how you feel."] },
+      { name:"Grounding — Feet on Earth", dur:"2 min", steps:["Stand or sit with both feet flat on the floor.","Press your feet down firmly. Feel the ground holding you.","Slowly shift weight to your heels, then toes, then outer edges.","Come back to center. Take 5 deep breaths, imagining roots growing from your feet.","Say quietly: 'I am here. I am safe. I am supported.'"] }
+    ],
+    reflection:["How did shaking feel — strange, freeing, awkward?","Do you feel more present in your body now?"],
+    affirmation:"I am grounded. I am safe. My body knows how to release."
+  },
+  { n:7, theme:"Full Reset", sub:"Bringing it all together", color:"#b8a5d4",
+    intro:"You made it to Day 7. Today we honor the work you've done all week with a full-body reset combining every element: breath, face, neck, chest, shaking, and grounding.",
+    exercises:[
+      { name:"7-Minute Full Body Reset", dur:"7 min", steps:["Min 1 — Breath: Extended exhale (4-6-8). Set the tone.","Min 2 — Jaw & Face: Jaw release and face melt. Soften your expression.","Min 3 — Neck & Shoulders: Slow neck rolls, shoulder shrug and drop.","Min 4 — Chest & Heart: Self-hug pressure release, then open wide.","Min 5 — Shake: Gentle shaking from feet upward. Let go.","Min 6 — Ground: Feet on floor, roots, presence. Feel the earth.","Min 7 — Stillness: Eyes closed. No doing. Just being. Notice."] }
+    ],
+    reflection:["How does your body feel compared to Day 1?","Which practice was most powerful for you this week?","How will you carry this forward into daily life?"],
+    affirmation:"I have everything I need within me. My nervous system is resilient. I return to ease."
+  }
+];
+
+// state
+let completed = JSON.parse(localStorage.getItem("sr-completed")||"[]");
+let stepState = JSON.parse(localStorage.getItem("sr-steps")||"{}");
+let reflections = JSON.parse(localStorage.getItem("sr-reflections")||"{}");
+
+function save(){
+  localStorage.setItem("sr-completed", JSON.stringify(completed));
+  localStorage.setItem("sr-steps", JSON.stringify(stepState));
+  localStorage.setItem("sr-reflections", JSON.stringify(reflections));
+}
+
+function renderOverview(){
+  const msg = document.getElementById("status-msg");
+  if(completed.length===0) msg.textContent = "Begin with Day 1 — each day unlocks after the previous is complete.";
+  else if(completed.length===7) msg.textContent = "🌿 You've completed the full reset. Beautiful work.";
+  else msg.textContent = `Day ${completed.length+1} is ready for you.`;
+
+  document.getElementById("days-grid").innerHTML = days.map((d,i)=>{
+    const unlocked = i===0 || completed.includes(i-1) || completed.includes(i);
+    const done = completed.includes(i);
+    return `<div class="day-card${done?' done':''}${!unlocked?' locked':''}"
+      onclick="${unlocked?`openDay(${i})`:''}" >
+      ${done?`<div class="done-badge">✅</div>`:''}
+      <div class="day-num">Day ${d.n}</div>
+      <div class="day-theme">${d.theme}</div>
+      <div class="day-sub">${d.sub.split(" ").slice(0,3).join(" ")}…</div>
+      <div class="day-dot" style="background:${d.color}"></div>
+      ${!unlocked?`<div class="lock-icon">🔒</div>`:''}
+    </div>`;
+  }).join("");
+}
+
+function openDay(i){
+  const d = days[i];
+  document.getElementById("overview").style.display="none";
+  document.getElementById("detail").style.display="block";
+
+  let html = `
+    <div class="day-header" style="background:${d.color}22">
+      <div class="dh-num">Day ${d.n} of 7</div>
+      <div class="dh-theme">${d.theme}</div>
+      <div class="dh-sub">${d.sub}</div>
+    </div>
+    <p class="intro">${d.intro}</p>
+    <div class="section-label">Today's Practice</div>`;
+
+  d.exercises.forEach((ex,ei)=>{
+    html+=`<div class="ex-block">
+      <div class="ex-top"><span class="ex-name">${ex.name}</span><span class="ex-dur">${ex.dur}</span></div>`;
+    ex.steps.forEach((step,si)=>{
+      const k=`${i}-${ei}-${si}`;
+      const chk=stepState[k];
+      html+=`<div class="step" onclick="toggleStep('${k}',this)">
+        <div class="step-box${chk?' checked':'}">${chk?'<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5 3.5-3.5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>':''}
+        </div>
+        <span class="step-text${chk?' checked':''}">${step}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+
+  html+=`<div class="reflection-section"><div class="section-label" style="margin-top:24px">Reflection</div>`;
+  d.reflection.forEach((q,qi)=>{
+    const k=`${i}-${qi}`;
+    html+=`<div class="ref-box">
+      <div class="ref-q">${q}</div>
+      <textarea class="ref-input" placeholder="Write your thoughts here..." onchange="saveRef('${k}',this.value)">${reflections[k]||""}</textarea>
+    </div>`;
+  });
+  html+=`</div>
+    <div class="section-label">Today's Affirmation</div>
+    <div class="affirmation">"${d.affirmation}"</div>
+    <button class="complete-btn" onclick="markDone(${i})">✓ Mark Day ${d.n} Complete</button>`;
+
+  document.getElementById("detail-content").innerHTML = html;
+  window.scrollTo(0,0);
+  window._currentDay = i;
+}
+
+function toggleStep(k, row){
+  stepState[k] = !stepState[k];
+  save();
+  const box = row.querySelector(".step-box");
+  const txt = row.querySelector(".step-text");
+  const chk = stepState[k];
+  box.classList.toggle("checked", chk);
+  box.innerHTML = chk?'<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5 3.5-3.5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>':'';
+  txt.classList.toggle("checked", chk);
+}
+
+function saveRef(k, val){
+  reflections[k] = val;
+  save();
+}
+
+function markDone(i){
+  if(!completed.includes(i)) completed.push(i);
+  save();
+  showOverview();
+}
+
+function showOverview(){
+  document.getElementById("detail").style.display="none";
+  document.getElementById("overview").style.display="block";
+  renderOverview();
+  window.scrollTo(0,0);
+}
+
+renderOverview();
+</script>
+</body>
+</html>
