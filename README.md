@@ -6,8 +6,8 @@ Below you'll find your two products. You can use them separately or together —
 
 🃏 Product 1 — Somatic Release Card Deck
 12 interactive flip cards — use anytime, anywhere
-👉 [YOUR CARD DECK LINK HERE]
-(e.g. https://hushstudio.github.io/somatic-cards)
+👉 https://thepausestudiomaja.github.io/somatic-cards/
+
 What's inside:
 
 12 somatic exercise cards across 6 body areas
@@ -19,8 +19,8 @@ Best for: Quick relief during the day — at your desk, before bed, or whenever 
 
 📅 Product 2 — 7-Day Nervous System Reset Program
 A structured 7-day journey — 5 to 10 minutes per day
-👉 [YOUR PROGRAM LINK HERE]
-(e.g. https://hushstudio.github.io/somatic-cards/program.html)
+👉 https://thepausestudiomaja.github.io/somatic-cards/program.html
+
 What's inside:
 
 7 days of guided somatic practice
